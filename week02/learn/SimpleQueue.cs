@@ -10,7 +10,7 @@
         queue.Enqueue(100);
         var value = queue.Dequeue();
         Console.WriteLine(value);
-        // Defect(s) Found:
+        // Defect(s) Found: throws an exception instead of returning 100
 
         Console.WriteLine("------------");
 
@@ -28,7 +28,7 @@
         Console.WriteLine(value);
         value = queue.Dequeue();
         Console.WriteLine(value);
-        // Defect(s) Found: 
+        // Defect(s) Found: wrong values are returned
 
         Console.WriteLine("------------");
 
@@ -44,7 +44,7 @@
         catch (IndexOutOfRangeException) {
             Console.WriteLine("I got the exception as expected.");
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: may behave as expected, but for the wrong reason
     }
 
     private readonly List<int> _queue = new();
@@ -53,8 +53,13 @@
     /// Enqueue the value provided into the queue
     /// </summary>
     /// <param name="value">Integer value to add to the queue</param>
-    private void Enqueue(int value) {
+    /* private void Enqueue(int value) {
         _queue.Insert(0, value);
+    }*/
+
+    /* I added these lines 60 - 63 to correct deffect 2  - Need to add to the end or back of the queue*/
+    private void Enqueue(int value) {
+        _queue.Add(value);
     }
 
     /// <summary>
@@ -65,9 +70,16 @@
     private int Dequeue() {
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
+            
 
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        /*var value = _queue[1];
+        _queue.RemoveAt(1); //The next item to dequeue should be at index 0, not 1
+        return value;*/
+
+        /*I added these lines 79 - 85 to correct deffect 1 */
+        /*The next item to dequeue should be at index 0, not 1 because When there’s only one item, index 1 doesn’t even exist*/
+        var value = _queue[0];
+        _queue.RemoveAt(0);
         return value;
     }
 }

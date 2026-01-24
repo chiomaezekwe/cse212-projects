@@ -37,10 +37,40 @@ public class TakingTurnsQueue
         {
             throw new InvalidOperationException("No one in the queue.");
         }
-        else
-        {
+        //else
+        //{
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+           
+           /* I added these lines 44 - 58 */ 
+
+           // If turns > 0, decrement; turns <= 0 means infinite turns
+    if (person.Turns > 0)
+    {
+        person.Turns--;
+
+        // Only re-enqueue if they still have turns left
+        if (person.Turns > 0)
+        {
+            _people.Enqueue(person);
+        }
+    }
+    else
+    {
+        // Infinite turns: always go to back of the queue
+        _people.Enqueue(person);
+    }
+
+    return person;
+}
+
+    public override string ToString()
+    {
+        return _people.ToString();
+    }
+} 
+
+
+            /*if (person.Turns > 1)
             {
                 person.Turns -= 1;
                 _people.Enqueue(person);
@@ -54,4 +84,6 @@ public class TakingTurnsQueue
     {
         return _people.ToString();
     }
-}
+}*/
+
+    

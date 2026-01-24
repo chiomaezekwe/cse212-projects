@@ -15,7 +15,7 @@
         _queue.Add(newNode);
     }
 
-    public string Dequeue()
+    /*public string Dequeue()
     {
         if (_queue.Count == 0) // Verify the queue is not empty
         {
@@ -52,7 +52,53 @@ internal class PriorityItem
     {
         Value = value;
         Priority = priority;
+    } */
+
+
+     // ---------------- FIXED Dequeue METHOD ----------------
+    public string Dequeue()
+    {
+        if (_queue.Count == 0)
+        {
+            throw new InvalidOperationException("The queue is empty.");
+        }
+    
+
+        int highPriorityIndex = 0;
+
+        // Find the first item with the highest priority (FIFO tie-breaking)
+        for (int i = 1; i < _queue.Count; i++)
+        {
+            if (_queue[i].Priority > _queue[highPriorityIndex].Priority)
+            {
+                highPriorityIndex = i; // Update only if strictly higher
+            }
+        }
+
+        string value = _queue[highPriorityIndex].Value;
+        _queue.RemoveAt(highPriorityIndex); // Remove it from the queue
+        return value;
     }
+
+    // DO NOT MODIFY THE CODE IN THIS METHOD
+    // This is for printing the whole queue
+    public override string ToString()
+    {
+        return $"[{string.Join(", ", _queue)}]";
+    }
+
+    // ---------------- INTERNAL CLASS ----------------
+    private class PriorityItem
+    {
+        internal string Value { get; set; }
+        internal int Priority { get; set; }
+
+        internal PriorityItem(string value, int priority)
+        {
+            Value = value;
+            Priority = priority;
+        }
+
 
     // DO NOT MODIFY THE CODE IN THIS METHOD
     // The graders rely on this method to check if you fixed all the bugs, so changes to it will cause you to lose points.
@@ -60,4 +106,5 @@ internal class PriorityItem
     {
         return $"{Value} (Pri:{Priority})";
     }
+}
 }

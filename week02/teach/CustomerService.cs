@@ -15,7 +15,12 @@ public class CustomerService {
         // Expected Result: 
         Console.WriteLine("Test 1");
 
-        // Defect(s) Found: 
+        /* I added these lines 18 - 21 */
+        var cs1 = new CustomerService(0);
+        Console.WriteLine(cs1);
+        Console.WriteLine("=================");
+
+        // Defect(s) Found:
 
         Console.WriteLine("=================");
 
@@ -24,11 +29,43 @@ public class CustomerService {
         // Expected Result: 
         Console.WriteLine("Test 2");
 
+        /* I added these lines 32 - 38 */
+        var cs2 = new CustomerService(2);
+        cs2.AddTestCustomer("Alex", "A1", "Login issue");
+        cs2.AddTestCustomer("Bisi", "B1", "Payment issue");
+        cs2.AddTestCustomer("Chioma", "C1", "Account locked"); 
+        Console.WriteLine(cs2);
+        Console.WriteLine("=================");
+
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
         // Add more Test Cases As Needed Below
+
+        /* I added these lines 46 - 69 */
+        // Test 3
+        // Scenario: Serve a customer from queue
+        // Expected Result: First customer is displayed and removed
+        Console.WriteLine("Test 3");
+        cs2.ServeCustomer();
+        Console.WriteLine(cs2);
+        Console.WriteLine("=================");
+
+        // Test 4
+        // Scenario: Serve remaining customer
+        // Expected Result: Customer served, queue becomes empty
+        Console.WriteLine("Test 4");
+        cs2.ServeCustomer();
+        Console.WriteLine(cs2);
+        Console.WriteLine("=================");
+
+        // Test 5
+        // Scenario: Serve customer from empty queue
+        // Expected Result: Error message displayed
+        Console.WriteLine("Test 5");
+        cs2.ServeCustomer();
+        Console.WriteLine("=================");
     }
 
     private readonly List<Customer> _queue = new();
@@ -84,12 +121,34 @@ public class CustomerService {
         _queue.Add(customer);
     }
 
+
+    /* I added these lines 125 - 137 */
+    /// <summary>
+    /// Helper method for automated testing (no user input)
+    /// </summary>
+    private void AddTestCustomer(string name, string accountId, string problem) {
+        if (_queue.Count >= _maxSize) {
+            Console.WriteLine("Maximum Number of Customers in Queue.");
+            return;
+        }
+
+        var customer = new Customer(name, accountId, problem);
+        _queue.Add(customer);
+    }
+
     /// <summary>
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+        /*I added thses lines 143 - 147, and 149 */
+        if (_queue.Count == 0) {
+            Console.WriteLine("No customers in queue.");
+            return;
+        }
+
         var customer = _queue[0];
+        _queue.RemoveAt(0);
+        //var customer = _queue[0];
         Console.WriteLine(customer);
     }
 
