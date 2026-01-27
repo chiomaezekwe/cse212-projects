@@ -24,7 +24,8 @@ public class Translator
     /// <returns>fixed array of divisors</returns>
     public void AddWord(string fromWord, string toWord)
     {
-        // ADD YOUR CODE HERE
+        // ADD YOUR CODE HERE, I added lines 27 - 29
+        _words[fromWord] = toWord;
     }
 
     /// <summary>
@@ -34,7 +35,11 @@ public class Translator
     /// <returns>The translated word or "???" if no translation is available</returns>
     public string Translate(string fromWord)
     {
-        // ADD YOUR CODE HERE
+        // ADD YOUR CODE HERE. I added lines 38 - 45
+        if (_words.TryGetValue(fromWord, out string translation))
+        {
+            return translation;
+        }
         return "";
     }
 }

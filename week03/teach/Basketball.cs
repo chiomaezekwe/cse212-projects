@@ -27,10 +27,32 @@ public class Basketball
             var fields = reader.ReadFields()!;
             var playerId = fields[0];
             var points = int.Parse(fields[8]);
+
+            /* I added these lines 31 - 43, 46 - 58 */
+            if (players.ContainsKey(playerId))
+            {
+                players[playerId] += points;
+            }
+
+            else
+
+            {
+                players[playerId] = points;
+            }
         }
 
         Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
 
+        var playerArray = players.ToArray();
+
+        Array.Sort(playerArray, (a, b) => b.Value.CompareTo(a.Value));
+
         var topPlayers = new string[10];
+
+        for (int i = 0; i < 10 && i < playerArray.Length; i++)
+        {
+            topPlayers[i] = playerArray[i].Key;
+            Console.WriteLine($"{i + 1}. Player {playerArray[i].Key} - {playerArray[i].Value} points");
+        }
     }
 }
