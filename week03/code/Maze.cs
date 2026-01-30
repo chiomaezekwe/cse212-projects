@@ -33,6 +33,13 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+        // I added these lines 36 - 43
+        var next = (_currX - 1, _currY);
+
+        if (!_mazeMap[(_currX, _currY)][0] || !_mazeMap.ContainsKey(next))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currX--;
     }
 
     /// <summary>
@@ -42,6 +49,13 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+        // I added these lines 52 - 59
+         var next = (_currX + 1, _currY);
+
+        if (!_mazeMap[(_currX, _currY)][1] || !_mazeMap.ContainsKey(next))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currX++;
     }
 
     /// <summary>
@@ -51,6 +65,13 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+        // I added these lines 68 - 75
+         var next = (_currX, _currY - 1);
+
+        if (!_mazeMap[(_currX, _currY)][2] || !_mazeMap.ContainsKey(next))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currY--;
     }
 
     /// <summary>
@@ -60,6 +81,13 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+        // I added these lines 84 - 91
+        var next = (_currX, _currY + 1);
+
+        if (!_mazeMap[(_currX, _currY)][3] || !_mazeMap.ContainsKey(next))
+            throw new InvalidOperationException("Can't go that way!");
+
+        _currY++;
     }
 
     public string GetStatus()
